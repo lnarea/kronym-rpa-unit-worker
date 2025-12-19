@@ -27,7 +27,7 @@ class ScraperService {
         // En Linux (Lightsail): usar Chromium del sistema
         _browser = await puppeteer.launch(
           headless: true,
-          executablePath: '/usr/bin/chromium-browser', // Ruta típica en Ubuntu
+          //executablePath: '/usr/bin/chromium-browser', // Ruta típica en Ubuntu
           args: [
             '--no-sandbox',
             '--disable-setuid-sandbox',
