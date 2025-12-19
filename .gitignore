@@ -1,0 +1,22 @@
+# https://dart.dev/guides/libraries/private-files
+# Created by `dart pub`
+.dart_tool/
+build/
+
+# Environment variables
+.env
+
+# Puppeteer downloads
+.local-chrome/
+
+# Lock files
+pubspec.lock
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
