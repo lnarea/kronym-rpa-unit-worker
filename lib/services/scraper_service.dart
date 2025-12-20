@@ -24,10 +24,10 @@ class ScraperService {
           ],
         );
       } else {
-        // En Linux (Lightsail): usar Chromium del sistema
+        // En Linux: dejar que Puppeteer use su propio Chromium
+        // Sin executablePath - Puppeteer descargará Chromium automáticamente
         _browser = await puppeteer.launch(
           headless: true,
-          //executablePath: '/usr/bin/chromium-browser', // Ruta típica en Ubuntu
           args: [
             '--no-sandbox',
             '--disable-setuid-sandbox',
@@ -60,8 +60,11 @@ class ScraperService {
       // Configurar viewport
       await page.setViewport(DeviceViewport(width: 1920, height: 1080));
       
-      // Navegar a Google
-      await page.goto('https://www.google.com', wait: Until.networkIdle);
+      // Navegar a Google - usar domContentLoaded para compatibilidad
+      await page.goto('https://www.google.com', wait: Until.domContentLoaded);
+      
+      // Esperar un poco más para asegurar carga completa
+      await Future.delayed(Duration(seconds: 2));
       
       // Extraer el título de la página
       final title = await page.title;
@@ -105,7 +108,8 @@ class ScraperService {
       await page.setViewport(DeviceViewport(width: 1920, height: 1080));
       
       // Navegar a Google
-      await page.goto('https://www.google.com', wait: Until.networkIdle);
+      await page.goto('https://www.google.com', wait: Until.domContentLoaded);
+      await Future.delayed(Duration(seconds: 1));
       
       // Buscar el campo de búsqueda y escribir
       await page.type('textarea[name="q"]', query);
@@ -168,4 +172,3 @@ class ScraperService {
   /// Verificar si el navegador está activo
   bool get isActive => _browser != null;
 }
-
